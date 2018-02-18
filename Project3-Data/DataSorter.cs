@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 
 namespace Project3_Data
 {
@@ -31,31 +30,26 @@ namespace Project3_Data
             };
         }
 
-        public void GetSurvivalRate(List<Passenger> dataList)
+        public List<ChartData> GetSurvivalRate(List<Passenger> dataList)
         {
             var males = dataList.Where(e => e.Gender == "Male" || e.Gender == "male");
-            var females = dataList.Count(e => e.Gender == "Female" || e.Gender == "female");
-            var maleKids = dataList.Where(e => e.Age < 16 && e.Age > 0 && (e.Gender == "male" || e.Gender == "Male" || string.IsNullOrEmpty(e.Gender)));
+            var females = dataList.Where(e => e.Gender == "Female" || e.Gender == "female");
+            var maleKids = males.Where(e => e.Age < 18);
 
-            var unknownGender = dataList.Count(e => string.IsNullOrEmpty(e.Gender));
+    //        var survivedMales = males.Where(e => e.Survived);
+            var survivedFemales = females.Where(e => e.Survived);
 
-            var totalfemales2= dataList.Count(e => (e.Gender == "Female" || e.Gender == "female") && e.Age > 16);
-            var totalkids2 = dataList.Count(e => e.Age < 16 && e.Age >0);
-            var survivedFemales = dataList.Count(e => (e.Gender == "Female" || e.Gender == "female") && e.Age > 16 && e.Survived);
-            var survivedKids = dataList.Count(e => e.Age < 16 && e.Age > 0 && e.Survived);
-            var deadFemales = totalfemales2 - survivedFemales;
-            var deadKids = totalkids2 - survivedKids;
+            var survivedMaleAdults = males.Where(e => e.Age >= 18 && e.Survived);
+            var survivedMalesKids = maleKids.Where(e => e.Survived);
 
-            var adultMales = males.Count() - maleKids.Count();
-            var survivedMales = males.Count(e => e.Survived);
+            var adultMaleSurvivalRate = (survivedMaleAdults.Count()*100)/males.Count();
+            var femalesAndKidsSurvivalRate = ((survivedFemales.Count() + survivedMalesKids.Count())*100/
+                                              (females.Count() + maleKids.Count()));
 
-            var femalesurivalrate = (survivedFemales * 100) / totalfemales2;
-            var kidsSurvivalrate = (survivedKids*100)/totalkids2;
-            var maleSurvivalrate = (survivedMales*100)/adultMales;
-
-            var femalesAndKids = totalfemales2 + totalkids2;
-
-            return;
+            return new List<ChartData>
+            {
+                new ChartData { MaleSurivalRate = adultMaleSurvivalRate, FemalesAndKidsSurvivalRate = femalesAndKidsSurvivalRate}
+            };
         }
     }
 }

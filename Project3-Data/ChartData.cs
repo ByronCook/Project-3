@@ -9,5 +9,7 @@
         public int AgeUnder30 { get; set; } = 0;
         public int AgeOver30 { get; set; } = 0;
         public int AgeUnknown { get; set; } = 0;
+        public int MaleSurivalRate { get; set; } = 0;
+        public int FemalesAndKidsSurvivalRate { get; set; } = 0;
     }
 }

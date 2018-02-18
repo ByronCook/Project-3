@@ -11,7 +11,7 @@ namespace Project3_Data
     {
         private readonly DataSorter _sorter = new DataSorter();
         private List<Passenger> TitanicPassengers { get; set; } 
-        private List<ChartData> ChartData { get; set; } 
+
         public Form1()
         {
             InitializeComponent();
@@ -29,14 +29,14 @@ namespace Project3_Data
             _sorter.GetSurvivalRate(TitanicPassengers);
         }
 
-        private void CreateChart(IReadOnlyList<string> variableList, string dataName, List<ChartData> data, int dataCount)
+        private void CreateChart(IReadOnlyList<string> variableList, string dataName, List<ChartData> data, int dataCount, SeriesChartType chartType)
         {
             chart1.Series?.Clear();
             chart1.DataSource = data;
             var count = 0;
             while (count < dataCount)
             {
-                AddChartSeries(variableList[count]);
+                AddChartSeries(variableList[count], chartType);
                 count++;
             }
 
@@ -44,12 +44,12 @@ namespace Project3_Data
             chart1.DataBind();
         }
 
-        private void AddChartSeries(string dataName)
+        private void AddChartSeries(string dataName, SeriesChartType chartType)
         {
             if (dataName != null)
             {
                 chart1.Series.Add(dataName).YValueMembers = dataName;
-                chart1.Series[dataName].ChartType = SeriesChartType.Column;
+                chart1.Series[dataName].ChartType = chartType;
                 chart1.Series[dataName].XValueType = ChartValueType.Int32;
                 chart1.Series[dataName].YValueType = ChartValueType.Int32;
             }
@@ -66,7 +66,7 @@ namespace Project3_Data
                         "Survived", "Dead"
                     };
 
-                    CreateChart(variableList, "Titanic", _sorter.GetSurvivedData(TitanicPassengers), 2);
+                    CreateChart(variableList, "Titanic", _sorter.GetSurvivedData(TitanicPassengers), 2, SeriesChartType.Column);
                 }
                     break;
                 case "Age":
@@ -76,7 +76,17 @@ namespace Project3_Data
                         "AgeUnder30", "AgeOver30", "AgeUnknown"
                     };
                     
-                    CreateChart(variableList, "Titanic", _sorter.GetAgeData(TitanicPassengers), 3);
+                    CreateChart(variableList, "Titanic", _sorter.GetAgeData(TitanicPassengers), 3, SeriesChartType.Column);
+                }
+                    break;
+                case "Surival Rate":
+                {
+                    var variableList = new List<string>
+                    {
+                        "MaleSurivalRate",
+                        "FemalesAndKidsSurvivalRate"
+                    };
+                    CreateChart(variableList, "Surival Rate Titanic in Percentages", _sorter.GetSurvivalRate(TitanicPassengers),2, SeriesChartType.Column);
                 }
                     break;
             }
