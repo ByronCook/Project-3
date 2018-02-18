@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -7,6 +9,7 @@ namespace Project3_Data
 {
     public partial class Form1 : Form
     {
+        private readonly DataSorter _sorter = new DataSorter();
         private List<Passenger> TitanicPassengers { get; set; } 
         private List<ChartData> ChartData { get; set; } 
         public Form1()
@@ -20,48 +23,63 @@ namespace Project3_Data
             TitanicPassengers = dataReader.CreatePassengerList();
         }
 
-        private void Form1_Load(object sender, System.EventArgs e) // Executed when the program loads for the first time
+        private void Form1_Load(object sender, EventArgs e) // Executed when the program loads for the first time
         {
             LoadData();
+            _sorter.GetSurvivalRate(TitanicPassengers);
         }
 
-        private void CreateChart(string primaryString, string secondaryString, string dataName)
+        private void CreateChart(IReadOnlyList<string> variableList, string dataName, List<ChartData> data, int dataCount)
         {
-            chart1.DataSource = ChartData;
-            chart1.Series.Add(primaryString).YValueMembers = primaryString;
-            chart1.Series[primaryString].AxisLabel = dataName;
-            chart1.Series[primaryString].ChartType = SeriesChartType.Column;
-            chart1.Series[primaryString].XValueType = ChartValueType.Int32;
-            chart1.Series[primaryString].YValueType = ChartValueType.Int32;
+            chart1.Series?.Clear();
+            chart1.DataSource = data;
+            var count = 0;
+            while (count < dataCount)
+            {
+                AddChartSeries(variableList[count]);
+                count++;
+            }
 
-            chart1.Series.Add(secondaryString).YValueMembers = secondaryString;
-            chart1.Series[secondaryString].ChartType = SeriesChartType.Column;
-            chart1.Series[secondaryString].XValueType = ChartValueType.Int32;
-            chart1.Series[secondaryString].YValueType = ChartValueType.Int32;
-
+            if (chart1.Series != null) chart1.Series[variableList[0]].AxisLabel = dataName;
             chart1.DataBind();
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void AddChartSeries(string dataName)
         {
-            if (comboBox1.SelectedItem.ToString() == "Survived")
+            if (dataName != null)
             {
-                GetSurvivedData();
-                CreateChart("Survived", "Dead", "Titanic");
+                chart1.Series.Add(dataName).YValueMembers = dataName;
+                chart1.Series[dataName].ChartType = SeriesChartType.Column;
+                chart1.Series[dataName].XValueType = ChartValueType.Int32;
+                chart1.Series[dataName].YValueType = ChartValueType.Int32;
             }
-            //else if (comboBox1.SelectedItem.ToString() == "Age")
         }
 
-        private void GetSurvivedData()
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var survivedTitanicPassengers = TitanicPassengers.Count(t => t.Survived);
-            var deadTitanicPassengers = TitanicPassengers.Count(t => !t.Survived);
-
-            ChartData = new List<ChartData>
+            switch (comboBox1.SelectedItem.ToString())
             {
-                new ChartData {Survived = survivedTitanicPassengers, Dead = deadTitanicPassengers, Female = 10}
-            };
-            //  data.Add(new ChartData()); // 2nd boat & dataset
+                case "Survived":
+                {
+                    var variableList = new List<string>
+                    {
+                        "Survived", "Dead"
+                    };
+
+                    CreateChart(variableList, "Titanic", _sorter.GetSurvivedData(TitanicPassengers), 2);
+                }
+                    break;
+                case "Age":
+                {
+                    var variableList = new List<string>
+                    {
+                        "AgeUnder30", "AgeOver30", "AgeUnknown"
+                    };
+                    
+                    CreateChart(variableList, "Titanic", _sorter.GetAgeData(TitanicPassengers), 3);
+                }
+                    break;
+            }
         }
     }
 }

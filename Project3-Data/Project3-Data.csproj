@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="ChartData.cs" />
     <Compile Include="DataReader.cs" />
+    <Compile Include="DataSorter.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Project3_Data
+﻿namespace Project3_Data
 {
     class ChartData
     {
-        public int Survived { get; set; }
-        public int Dead { get; set; }
-        public int Female { get; set; }
+        public int Survived { get; set; } = 0;
+        public int Dead { get; set; } = 0;
+        public int Female { get; set; } = 0;
+        public int Male { get; set; } = 0;
+        public int AgeUnder30 { get; set; } = 0;
+        public int AgeOver30 { get; set; } = 0;
+        public int AgeUnknown { get; set; } = 0;
     }
 }

@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project3_Data
 {
@@ -13,12 +10,12 @@ namespace Project3_Data
         public List<Passenger> CreatePassengerList()
         {
             var passengerList = new List<Passenger>();
-          //  const string url = "https://docs.google.com/spreadsheets/d/1cNISQ0VuUx-9yTPsPnfM35px0LrPm1zrP4tgZxkZ2Bs/pub?output=tsv";
-            var passengerLines =
-                File.ReadAllLines(
-                    "C:\\Users\\Administrator\\Documents\\Visual Studio 2015\\Projects\\Project3-Data\\Project3-Data\\resource\\titanic.csv");
 
-
+            var projectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent?.FullName;
+            var filePath = projectPath + "\\resource\\titanic.csv";
+            
+            var passengerLines = File.ReadAllLines(filePath);
+            
             foreach (var item in passengerLines)
             {
                 if (passengerLines.ElementAt(0) == item)
@@ -26,7 +23,7 @@ namespace Project3_Data
                     continue;
                 }
                 var values = item.Split(',');
-                passengerList.Add(new Passenger()
+                passengerList.Add(new Passenger
                 {
                     BoatClass = values[0],
                     Survived = values[1] != "" && Convert.ToBoolean(Convert.ToInt16(values[1])),
@@ -45,35 +42,7 @@ namespace Project3_Data
                 });
             }
 
-
             return passengerList;
-
-
-            //var rowResult = fileList.Split('\r');
-
-            //if (rowResult.Count() < 1)
-            //{
-            //    return artistsList;
-            //}
-
-            //foreach (var item in rowResult)
-            //{
-            //    if (rowResult.ElementAt(0) == item)
-            //    {
-            //        continue;
-            //    }
-            //    var artistData = item.Replace("\n", "").Split('\t');
-            //    artistsList.Add(new Passenger
-            //    {
-            //        Name = artistData[0],
-            //        SetStartTime = Convert.ToDateTime(artistData[1]),
-            //        SetEndTime = Convert.ToDateTime(artistData[2]),
-            //        Stage = artistData[3],
-            //        Day = Convert.ToInt32(artistData[4]),
-            //        EventName = artistData[5]
-            //    });
-            //}
-            //return artistsList;
         }
     }
 }
