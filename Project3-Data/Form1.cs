@@ -10,7 +10,8 @@ namespace Project3_Data
     public partial class Form1 : Form
     {
         private readonly DataSorter _sorter = new DataSorter();
-        private List<Passenger> TitanicPassengers { get; set; } 
+        private List<Passenger> TitanicPassengers { get; set; }
+        private List<Passenger> LusitaniaPassengers { get; set; }
 
         public Form1()
         {
@@ -21,7 +22,8 @@ namespace Project3_Data
         private void LoadData()
         {
             var dataReader = new DataReader();
-           // TitanicPassengers = dataReader.
+            TitanicPassengers = dataReader.CreateTitanicPassengerList();
+            LusitaniaPassengers = dataReader.CreateLusitaniaPassengerList();
         }
 
         private void Form1_Load(object sender, EventArgs e) // Executed when the program loads for the first time
@@ -67,7 +69,7 @@ namespace Project3_Data
                         "Survived", "Dead"
                     };
 
-                    CreateChart(variableList, "Titanic", _sorter.GetSurvivedData(TitanicPassengers), 2, SeriesChartType.Column);
+                    CreateChart(variableList, "Titanic", _sorter.GetSurvivedData(TitanicPassengers), 2, SeriesChartType.Doughnut);
                 }
                     break;
                 case "Age":
