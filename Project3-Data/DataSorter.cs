@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 
 namespace Project3_Data
@@ -14,7 +17,7 @@ namespace Project3_Data
             {
                 new ChartData {Survived = survivedTitanicPassengers, Dead = deadTitanicPassengers, Female = 10}
                 // new ChartData(); //2nd boat
-            }; 
+            };
         }
 
         public List<ChartData> GetAgeData(List<Passenger> dataList)
@@ -26,7 +29,7 @@ namespace Project3_Data
 
             return new List<ChartData>
             {
-                new ChartData { AgeUnder30 = under30, AgeOver30 = over30, AgeUnknown = ageUnknown}
+                new ChartData {AgeUnder30 = under30, AgeOver30 = over30, AgeUnknown = ageUnknown}
             };
         }
 
@@ -36,7 +39,7 @@ namespace Project3_Data
             var females = dataList.Where(e => e.Gender == "Female" || e.Gender == "female");
             var maleKids = males.Where(e => e.Age < 18);
 
-    //        var survivedMales = males.Where(e => e.Survived);
+            //        var survivedMales = males.Where(e => e.Survived);
             var survivedFemales = females.Where(e => e.Survived);
 
             var survivedMaleAdults = males.Where(e => e.Age >= 18 && e.Survived);
@@ -48,8 +51,50 @@ namespace Project3_Data
 
             return new List<ChartData>
             {
-                new ChartData { MaleSurivalRate = adultMaleSurvivalRate, FemalesAndKidsSurvivalRate = femalesAndKidsSurvivalRate}
+                new ChartData
+                {
+                    MaleSurivalRate = adultMaleSurvivalRate,
+                    FemalesAndKidsSurvivalRate = femalesAndKidsSurvivalRate
+                }
             };
+        }
+
+        public void PopulateDatabase()
+        {
+            SqlConnection sqlConn =
+                new SqlConnection(
+                    @"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True");
+
+            SqlDataAdapter da = new SqlDataAdapter();
+            var projectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent?.FullName;
+            var filePath = projectPath + "\\resource\\Titanic_Sorted_v1.csv";
+
+            var passengerLines = File.ReadAllLines(filePath);
+
+            foreach (var item in passengerLines)
+            {
+                if (passengerLines.ElementAt(0) == item)
+                {
+                    continue;
+                }
+                var values = item.Split(',');
+
+                da.InsertCommand =
+                    new SqlCommand(
+                        "INSERT INTO TitanicPassengers VALUES(@boatclass,@survived,@name,@gender,@age,@country)",
+                        sqlConn);
+                da.InsertCommand.Parameters.Add("@boatclass", SqlDbType.VarChar).Value = values[0];
+                da.InsertCommand.Parameters.Add("@survived", SqlDbType.Int).Value = values[1];
+                da.InsertCommand.Parameters.Add("@name", SqlDbType.VarChar).Value = values[2];
+                da.InsertCommand.Parameters.Add("@gender", SqlDbType.VarChar).Value = values[3];
+                da.InsertCommand.Parameters.Add("@age", SqlDbType.VarChar).Value = values[4];
+                da.InsertCommand.Parameters.Add("@country", SqlDbType.VarChar).Value = values[5];
+                sqlConn.Open();
+                da.InsertCommand.ExecuteNonQuery();
+
+                da.SelectCommand = new SqlCommand("SELECT * FROM TitanicPassengers");
+                sqlConn.Close();
+            }
         }
     }
 }

@@ -15,12 +15,13 @@ namespace Project3_Data
         public Form1()
         {
             InitializeComponent();
+            _sorter.PopulateDatabase();
         }
 
         private void LoadData()
         {
             var dataReader = new DataReader();
-            TitanicPassengers = dataReader.CreatePassengerList();
+           // TitanicPassengers = dataReader.
         }
 
         private void Form1_Load(object sender, EventArgs e) // Executed when the program loads for the first time
