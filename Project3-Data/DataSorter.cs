@@ -66,6 +66,9 @@ namespace Project3_Data
                     @"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True");
 
             SqlDataAdapter da = new SqlDataAdapter();
+
+
+            
             var projectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent?.FullName;
             var filePath = projectPath + "\\resource\\Titanic_Sorted_v1.csv";
 
@@ -77,6 +80,12 @@ namespace Project3_Data
                 {
                     continue;
                 }
+
+                if (passengerLines.ElementAt(1310) == item)
+                {
+                    return;
+                }
+
                 var values = item.Split(',');
 
                 da.InsertCommand =

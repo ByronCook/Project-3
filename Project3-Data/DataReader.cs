@@ -12,7 +12,7 @@ namespace Project3_Data
             var passengerList = new List<Passenger>();
 
             var projectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent?.FullName;
-            var filePath = projectPath + "\\resource\\titanic.csv";
+            var filePath = projectPath + "\\resource\\Titatnic_Sorted_v1.csv";
             
             var passengerLines = File.ReadAllLines(filePath);
             

@@ -15,7 +15,7 @@ namespace Project3_Data
         public Form1()
         {
             InitializeComponent();
-            _sorter.PopulateDatabase();
+            //_sorter.PopulateDatabase();
         }
 
         private void LoadData()
@@ -27,7 +27,7 @@ namespace Project3_Data
         private void Form1_Load(object sender, EventArgs e) // Executed when the program loads for the first time
         {
             LoadData();
-            _sorter.GetSurvivalRate(TitanicPassengers);
+           // _sorter.GetSurvivalRate(TitanicPassengers);
         }
 
         private void CreateChart(IReadOnlyList<string> variableList, string dataName, List<ChartData> data, int dataCount, SeriesChartType chartType)
