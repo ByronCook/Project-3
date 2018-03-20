@@ -150,6 +150,20 @@ namespace Project3_Data
 
                 var data = _sorter.GetPassengerByCountryData(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString());
                 CreateChart(variableList, "Survied per country, per gender", data, 2, SeriesChartType.Column);
+                case "Boat Class":
+                    {
+                        var variableList = new List<string>
+                    {
+                        "FirstClassTitanic",
+                        "SecondClassTitanic",
+                        "ThirdClassTitanic",
+
+                        "FirstClassLusitania",
+                        "SecondClassLusitania",
+                        "ThirdClassLusitania"
+                    };
+                        CreateChart(variableList, "Boat Class", _sorter.GetBoatClass(TitanicPassengers, LusitaniaPassengers), 6, SeriesChartType.Column);
+                    }
             }
         }
     }

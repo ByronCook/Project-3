@@ -79,8 +79,40 @@ namespace Project3_Data
             };
         } 
 
-        public void PopulateDatabase()
+        // vraag Jorren en Joyce
+        public List<ChartData> GetBoatClass(List<Passenger> titanicList, List<Passenger> lusitaniaList)
         {
+            var firstClassTitanic = titanicList.Count(t => t.BoatClass == "First");
+            var secondClassTitanic = titanicList.Count(t => t.BoatClass == "Second");
+            var thirdClassTitanic = titanicList.Count(t => t.BoatClass == "Third");
+
+            var firstClassLusitania = lusitaniaList.Count(l => l.BoatClass == "Saloon");
+            var secondClassLusitania = lusitaniaList.Count(l => l.BoatClass == "Second");
+            var thirdClassLusitania = lusitaniaList.Count(l => l.BoatClass == "Third");
+
+            var survivedTitanic = titanicList.Where(t => t.Survived);
+            var survivedLusitania = lusitaniaList.Where(l => l.Survived);
+
+            Console.WriteLine(firstClassLusitania);
+
+            return new List<ChartData>
+            {
+                new ChartData
+                {
+                    FirstClassTitanic = firstClassTitanic,
+                    SecondClassTitanic = secondClassTitanic,
+                    ThirdClassTitanic = thirdClassTitanic,
+
+                    FirstClassLusitania = firstClassLusitania,
+                    SecondClassLusitania = secondClassLusitania,
+                    ThirdClassLusitania = thirdClassLusitania
+                }
+            };
+        }
+
+
+         public void PopulateDatabase()
+         {
             SqlConnection sqlConn =
                 new SqlConnection(
                     @"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True");
@@ -162,6 +194,6 @@ namespace Project3_Data
                     LusitaniaPassengers = malesLusitania
                 }
             };
-        }
+         }
     }
 }

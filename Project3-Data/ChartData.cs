@@ -15,5 +15,13 @@
         public int SurvivedFemalesFromCountry { get; set; } = 0;
         public int TitanicPassengers { get; set; } = 0;
         public int LusitaniaPassengers { get; set; } = 0;
+        public int BoatClass { get; set; } = 0;
+        public int FirstClassTitanic { get; set; } = 0;
+        public int SecondClassTitanic { get; set; } = 0;
+        public int ThirdClassTitanic { get; set; } = 0;
+
+        public int FirstClassLusitania { get; set; } = 0;
+        public int SecondClassLusitania { get; set; } = 0;
+        public int ThirdClassLusitania { get; set; } = 0;
     }
 }
