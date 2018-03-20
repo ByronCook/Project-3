@@ -11,5 +11,9 @@
         public int AgeUnknown { get; set; } = 0;
         public int MaleSurivalRate { get; set; } = 0;
         public int FemalesAndKidsSurvivalRate { get; set; } = 0;
+        public int SurvivedMalesFromCountry { get; set; } = 0;
+        public int SurvivedFemalesFromCountry { get; set; } = 0;
+        public int TitanicPassengers { get; set; } = 0;
+        public int LusitaniaPassengers { get; set; } = 0;
     }
 }

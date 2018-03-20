@@ -31,7 +31,7 @@ namespace Project3_Data
                     LastName = values[4],
                     Gender = values[5],
                     Age = values[6] != "" ? Convert.ToDouble(values[6]) : 0,
-                    Country = values[13]
+                    Country = values[14]
                 });
             }
 
