@@ -86,7 +86,7 @@ namespace Project3_Data
             var secondClassTitanic = titanicList.Count(t => t.BoatClass == "Second");
             var thirdClassTitanic = titanicList.Count(t => t.BoatClass == "Third");
 
-            var firstClassLusitania = lusitaniaList.Count(l => l.BoatClass == "Saloon");
+            var firstClassLusitania = lusitaniaList.Count(l => l.BoatClass == "First");
             var secondClassLusitania = lusitaniaList.Count(l => l.BoatClass == "Second");
             var thirdClassLusitania = lusitaniaList.Count(l => l.BoatClass == "Third");
 

@@ -95,12 +95,28 @@ namespace Project3_Data
                         "LusitaniaPassengers"
                     };
 
+                    comboBox2.Items.Clear();
                     comboBox2.Items.Add("Male");
                     comboBox2.Items.Add("Female");
                     comboBox2.Items.Add("All");
                     label2.Text = "Filter on: Gender";
 
                     CreateChart(passengersVariableList, "Total amount of passengers per boat", _sorter.GetTotalPassengers(TitanicPassengers, LusitaniaPassengers), 2, SeriesChartType.Column);
+                    break;
+                case "Boat Class":
+                    {
+                        var variableList = new List<string>
+                    {
+                        "FirstClassTitanic",
+                        "SecondClassTitanic",
+                        "ThirdClassTitanic",
+
+                        "FirstClassLusitania",
+                        "SecondClassLusitania",
+                        "ThirdClassLusitania"
+                    };
+                        CreateChart(variableList, "Boat Class", _sorter.GetBoatClass(TitanicPassengers, LusitaniaPassengers), 6, SeriesChartType.Column);
+                    }
                     break;
             }
         }
@@ -150,20 +166,6 @@ namespace Project3_Data
 
                 var data = _sorter.GetPassengerByCountryData(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString());
                 CreateChart(variableList, "Survied per country, per gender", data, 2, SeriesChartType.Column);
-                case "Boat Class":
-                    {
-                        var variableList = new List<string>
-                    {
-                        "FirstClassTitanic",
-                        "SecondClassTitanic",
-                        "ThirdClassTitanic",
-
-                        "FirstClassLusitania",
-                        "SecondClassLusitania",
-                        "ThirdClassLusitania"
-                    };
-                        CreateChart(variableList, "Boat Class", _sorter.GetBoatClass(TitanicPassengers, LusitaniaPassengers), 6, SeriesChartType.Column);
-                    }
             }
         }
     }

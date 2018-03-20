@@ -58,7 +58,7 @@
             "Survived",
             "Age",
             "Surival Rate",
-            "Passengers"});
+            "Passengers",
             "Boat Class"});
             this.comboBox1.Location = new System.Drawing.Point(13, 452);
             this.comboBox1.Name = "comboBox1";
