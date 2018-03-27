@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -16,7 +14,7 @@ namespace Project3_Data
         public Form1()
         {
             InitializeComponent();
-            _sorter.PopulateDatabase();
+            //_sorter.PopulateDatabase();
         }
 
         private void LoadData()
@@ -60,6 +58,11 @@ namespace Project3_Data
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(comboBox1.SelectedItem.ToString()))
+            {
+                return;
+            }
+
             switch (comboBox1.SelectedItem.ToString())
             {
                 case "Survived":
@@ -122,6 +125,11 @@ namespace Project3_Data
                         "TitanicPassengers",
                         "LusitaniaPassengers"
                     };
+
+            if (string.IsNullOrEmpty(comboBox2.SelectedItem.ToString()))
+            {
+                return;
+            }
 
             switch (comboBox2.SelectedItem.ToString())
             {
@@ -198,6 +206,11 @@ namespace Project3_Data
             var country = countryList.Contains(comboBox3.SelectedItem.ToString());
             // Waarde bestaat in de lijst -> pak passangers per gender & waarde
 
+            if (string.IsNullOrEmpty(comboBox3.SelectedItem.ToString()))
+            {
+                return;
+            }
+
             if (country)
             {
                 var variableList = new List<string>
@@ -225,24 +238,21 @@ namespace Project3_Data
                         CreateChart(variableList, "Family Members", _sorter.GetFamilyMembers(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString()), 2, SeriesChartType.Column);
                     }
                     break;
-            }
 
-            switch (comboBox3.SelectedItem.ToString())
-            {
                 case "Unknown Age":
                 case "0-12":
                 case "12-20":
                 case "20-45":
                 case "45-65":
                 case "65-150":
-                    var variableList = new List<string>
+                    var stringList = new List<string>
                     {
                         "Survived",
                         "Dead"
                     };
 
                     var data = _sorter.GetSurvivedByAgeCategory(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString());
-                    CreateChart(variableList, "Survied per country, per gender", data, 2, SeriesChartType.Column);
+                    CreateChart(stringList, "Survied per country, per gender", data, 2, SeriesChartType.Column);
                     break;
             }
         }
@@ -252,6 +262,20 @@ namespace Project3_Data
             comboBox1.SelectedIndex = comboBox1.FindStringExact("Passengers");
             comboBox2.SelectedIndex = comboBox2.FindStringExact("All");
             comboBox3.SelectedIndex = comboBox3.FindStringExact("All countries");
+        }
+
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(comboBox4.SelectedItem.ToString()))
+            {
+                return;
+            }
+
+            switch (comboBox4.SelectedItem.ToString())
+            {
+                default:
+                    break;
+            }
         }
     }
 }
