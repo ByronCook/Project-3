@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
@@ -51,10 +51,10 @@
             // 
             // chart1
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea7.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea7);
+            legend7.Name = "Legend1";
+            this.chart1.Legends.Add(legend7);
             this.chart1.Location = new System.Drawing.Point(12, 68);
             this.chart1.Name = "chart1";
             this.chart1.Size = new System.Drawing.Size(699, 337);
@@ -144,10 +144,10 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(12, 492);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(709, 13);
+            this.label5.Size = new System.Drawing.Size(595, 13);
             this.label5.TabIndex = 9;
-            this.label5.Text = "Is er bij de Lusitania een verschil te zien tussen de verhouding tussen mannen en" +
-    " vrouwen van verschillende afkomsten ten opzichte van de Titanic?";
+            this.label5.Text = "Is there a difference between the ratio of men and women with various nationaliti" +
+    "es on the Titanic compared to the Lusitania?";
             // 
             // button2
             // 
@@ -157,6 +157,7 @@
             this.button2.TabIndex = 10;
             this.button2.Text = "Question 2";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label6
             // 

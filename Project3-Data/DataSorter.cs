@@ -349,8 +349,14 @@ namespace Project3_Data
             var dead = 0;
 
             var age = selectedChoice.Split('-');
-            var age1 = Convert.ToInt32(age[0]);
-            var age2 = Convert.ToInt32(age[1]);
+            var age1 = 0;
+            var age2 = 0;
+            if (age[0] != "Unknown Age")
+            {
+                age1 = Convert.ToInt32(age[0]);
+                age2 = Convert.ToInt32(age[1]);
+            }
+           
 
             if (selectedChoice != "Unknown Age")
             {
@@ -390,5 +396,72 @@ namespace Project3_Data
                 }
             };
          }
+
+        public List<ChartData> GetSurvivalRate(List<Passenger> titanicPassengers, List<Passenger> lusitaniaPassengers, string selectedChoice, string ageChoice, string survivalChoice)
+        {
+            var survived = 0;
+            var dead = 0;
+
+            var age = ageChoice.Split('-');
+            var age1 = Convert.ToInt32(age[0]);
+            var age2 = Convert.ToInt32(age[1]);
+
+            if (ageChoice != "Unknown Age")
+            {
+                if (selectedChoice == "Titanic Passengers")
+                {
+                    var survivedPassengers = titanicPassengers.Count(t => t.Survived && t.Age > age1 && t.Age < age2);
+                    var deadPassengers = titanicPassengers.Count(t => !t.Survived && t.Age > age1 && t.Age < age2);
+                    var totalPassengers = titanicPassengers.Count(t => t.Age > age1 && t.Age < age2);
+                    
+                    survived = (survivedPassengers * 100) / totalPassengers;
+                    dead = (deadPassengers * 100) / totalPassengers;
+                }
+                else if (selectedChoice == "Lusitania Passengers")
+                {
+                    var survivedPassengers = lusitaniaPassengers.Count(t => t.Survived && t.Age > age1 && t.Age < age2);
+                    var deadPassengers = lusitaniaPassengers.Count(t => !t.Survived && t.Age > age1 && t.Age < age2);
+                    var totalPassengers = lusitaniaPassengers.Count(t => t.Age > age1 && t.Age < age2);
+
+                    survived = (survivedPassengers * 100) / totalPassengers;
+                    dead = (deadPassengers * 100) / totalPassengers;
+                }
+            }
+            else
+            {
+                if (selectedChoice == "Titanic Passengers")
+                {
+                    var survivedPassengers = titanicPassengers.Count(t => t.Survived && t.Age == 0);
+                    var deadPassengers = titanicPassengers.Count(t => !t.Survived && t.Age == 0);
+                    var totalPassengers = titanicPassengers.Count(t => t.Age == 0);
+
+                    survived = (survivedPassengers * 100) / totalPassengers;
+                    dead = (deadPassengers * 100) / totalPassengers;
+                }
+                else
+                {
+                    var survivedPassengers = lusitaniaPassengers.Count(t => t.Survived && t.Age == 0);
+                    var deadPassengers = lusitaniaPassengers.Count(t => !t.Survived && t.Age == 0);
+                    var totalPassengers = lusitaniaPassengers.Count(t => t.Age == 0);
+
+                    survived = (survivedPassengers * 100) / totalPassengers;
+                    dead = (deadPassengers * 100) / totalPassengers;
+                }
+            }
+          
+
+
+
+
+
+            return new List<ChartData>
+            {
+                new ChartData
+                {
+                    Survived = survived, 
+                    Dead = dead
+                }
+            };
+        }
     }
 }
