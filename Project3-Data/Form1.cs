@@ -242,7 +242,7 @@ namespace Project3_Data
 
                         comboBox4.Items.Clear();
                         comboBox4.Items.Add("Survival Rate");
-                        comboBox4.Items.Add("Amount");
+                        comboBox4.Items.Add("Amount of Passengers");
                         label4.Text = "Filter on: ship";
 
                         CreateChart(variableList, "Family Members", _sorter.GetFamilyMembers(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString()), 2, SeriesChartType.Column);
@@ -266,7 +266,7 @@ namespace Project3_Data
 
 
                     var data = _sorter.GetSurvivedByAgeCategory(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString());
-                    CreateChart(stringList, "Survived per country, per gender", data, 2, SeriesChartType.Column);
+                    CreateChart(stringList, "Survived per boat, per age group", data, 2, SeriesChartType.Column);
 
                     
                     break;
@@ -304,15 +304,16 @@ namespace Project3_Data
 
                     var data = _sorter.GetSurvivalRate(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString(), comboBox4.SelectedItem.ToString());
                     CreateChart(stringList, "Survival rate", data, 2, SeriesChartType.Column);
+                    break;
                 case "Survival Rate":
-                case "Amount":
-                    var stringList = new List<string>
+                case "Amount of Passengers":
+                    var stringList2 = new List<string>
                     {
                         "SurvivedTitanicPassengers",
                         "SurvivedLusitaniaPassengers"
                     };
 
-                    CreateChart(stringList, "Survival rate in percentages", _sorter.GetSurvivalRatePerBoatClass(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString(), comboBox4.SelectedItem.ToString()), 2, SeriesChartType.Column);
+                    CreateChart(stringList2, "Survival rate in percentages", _sorter.GetSurvivalRatePerBoatClass(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString(), comboBox4.SelectedItem.ToString()), 2, SeriesChartType.Column);
 
                     break;
                 case "Amount":
@@ -328,7 +329,7 @@ namespace Project3_Data
 
 
                     var dataList = _sorter.GetSurvivedByAgeCategory(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString());
-                    CreateChart(varList, "Survied per country, per gender", dataList, 2, SeriesChartType.Column);
+                    CreateChart(varList, "Survied per boat, per age group", dataList, 2, SeriesChartType.Column);
                     break;
                 default:
                     break;
