@@ -282,7 +282,6 @@ namespace Project3_Data
             comboBox1.SelectedIndex = comboBox1.FindStringExact("Passengers");
             comboBox2.SelectedIndex = comboBox2.FindStringExact("All Genders");
             comboBox3.SelectedIndex = comboBox3.FindStringExact("All countries");
-
             label14.Text = "It is quite clear that both the Titanic and the Lusitania both had a lot more male \npassengers than female passengers. With a total of almost 2000 passengers \non the Lusitania, just above 1400 of those were male. The Titanic had \nabout 1400 passengers and a little bit over 800 of those were male. \nWhen comparing the amount of passengers per country, it is evident that most \npassengers came from either the United States, Canada or the United Kingdom. \nBut there are also differences in other countries, for example sweden. \nThe titanic had 40 swedish passengers whereas the Lusitania only had 1";
         }
 
@@ -358,7 +357,6 @@ namespace Project3_Data
             comboBox1.SelectedIndex = comboBox1.FindStringExact("Survived");
             comboBox2.SelectedIndex = comboBox2.FindStringExact("Titanic Passengers");
             comboBox3.SelectedIndex = comboBox3.FindStringExact("20-45");
-
             label14.Text = "No, there is no significant difference in survival rate \nper age group. Both ships show a trend slightly \nfavoring younger individuals, peaking at the age group \nof 12 – 20 years old. Our hypothesis is that it is \nlinked to general health and fitness of the individuals, \nmainly because these people can rush to safety much faster \nwith less effort than the elderly and also more efficient and \nwith caution than kids below 12.";
         }
     }

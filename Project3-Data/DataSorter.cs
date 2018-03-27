@@ -285,7 +285,7 @@ namespace Project3_Data
             var tPassengers = new List<Passenger>();
             var lPassengers = new List<Passenger>();
 
-            if (gender == "All")
+            if (gender == "All Genders")
             { 
                 tPassengers = titanicList;
                 lPassengers = lusitaniaList;
