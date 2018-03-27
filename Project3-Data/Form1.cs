@@ -16,7 +16,7 @@ namespace Project3_Data
         public Form1()
         {
             InitializeComponent();
-            //_sorter.PopulateDatabase();
+            _sorter.PopulateDatabase();
         }
 
         private void LoadData()
@@ -62,32 +62,17 @@ namespace Project3_Data
         {
             switch (comboBox1.SelectedItem.ToString())
             {
-//                case "Survived":
-//                    var survivedVariableList = new List<string>
-//                    {
-//                        "Survived", "Dead"
-//                    };
-//
-//                    comboBox2.Items.Add("USA");
-//
-//                    CreateChart(survivedVariableList, "Titanic", _sorter.GetSurvivedData(TitanicPassengers), 2, SeriesChartType.Column);
-//                    break;
-//                case "Age":
-//                    var ageVariableList = new List<string>
-//                    {
-//                        "AgeUnder30", "AgeOver30", "AgeUnknown"
-//                    };
-//                    
-//                    CreateChart(ageVariableList, "Titanic", _sorter.GetAgeData(TitanicPassengers), 3, SeriesChartType.Column);
-//                        break;
-//                case "Surival Rate":
-//                    var survivalRateVariableList = new List<string>
-//                    {
-//                        "MaleSurivalRate",
-//                        "FemalesAndKidsSurvivalRate"
-//                    };
-//                    CreateChart(survivalRateVariableList, "Surival Rate Titanic in Percentages", _sorter.GetSurvivalRate(TitanicPassengers),2, SeriesChartType.Column);
-//                    break;
+                case "Survived":
+                    var survivedVariableList = new List<string>
+                    {
+                        "Survived", "Dead"
+                    };
+                    comboBox2.Items.Clear();
+                    comboBox2.Items.Add("Titanic Passengers");
+                    comboBox2.Items.Add("Lusitania Passengers");
+                    comboBox2.Items.Add("All Passengers");
+                    CreateChart(survivedVariableList, "Total amount of passengers", _sorter.GetSurvivedData(TitanicPassengers, LusitaniaPassengers, comboBox1.SelectedItem.ToString()), 2, SeriesChartType.Column);
+                    break;
                 case "Passengers":
                     var passengersVariableList = new List<string>
                     {
@@ -96,9 +81,10 @@ namespace Project3_Data
                     };
 
                     comboBox2.Items.Clear();
+
                     comboBox2.Items.Add("Male");
                     comboBox2.Items.Add("Female");
-                    comboBox2.Items.Add("All");
+                    comboBox2.Items.Add("All Genders");
                     label2.Text = "Filter on: Gender";
 
                     CreateChart(passengersVariableList, "Total amount of passengers per boat", _sorter.GetTotalPassengers(TitanicPassengers, LusitaniaPassengers), 2, SeriesChartType.Column);
@@ -137,13 +123,11 @@ namespace Project3_Data
                         "LusitaniaPassengers"
                     };
 
-
-
-
             switch (comboBox2.SelectedItem.ToString())
             {
                 case "Male":
                 case "Female":
+                    comboBox3.Items.Clear();
                     var countryList = _sorter.GetUniqueCountries(TitanicPassengers, LusitaniaPassengers);
 
                     foreach (var t in countryList)
@@ -151,9 +135,11 @@ namespace Project3_Data
                         comboBox3.Items.Add(string.IsNullOrEmpty(t) ? "All countries" : t);
                     }
 
-                    CreateChart(passengersVariableList, "Total amount of passengers per boat", _sorter.GetAllPassengersByGender(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString()), 2, SeriesChartType.Column);
+                    label4.Text = "Filter on: countries";
+                    CreateChart(passengersVariableList, "Total amount of female passengers per boat", _sorter.GetAllPassengersByGender(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString()), 2, SeriesChartType.Column);
                     break;
-                case "All":
+                case "All Genders":
+                    comboBox3.Items.Clear();
                     var countries = _sorter.GetUniqueCountries(TitanicPassengers, LusitaniaPassengers);
 
                     foreach (var t in countries)
@@ -161,7 +147,28 @@ namespace Project3_Data
                         comboBox3.Items.Add(string.IsNullOrEmpty(t) ? "All countries" : t);
                     }
 
-                    CreateChart(passengersVariableList, "Total amount of passengers per boat", _sorter.GetTotalPassengers(TitanicPassengers, LusitaniaPassengers), 2, SeriesChartType.Column);
+                    label4.Text = "Filter on: countries";
+                    CreateChart(passengersVariableList, "Total amount of male passengers per boat", _sorter.GetTotalPassengers(TitanicPassengers, LusitaniaPassengers), 2, SeriesChartType.Column);
+                    break;
+                case "Lusitania Passengers":
+                case "All Passengers":
+                case "Titanic Passengers":
+
+                    var stringList = new List<string>
+                    {
+                        "Survived",
+                        "Dead"
+                    };
+                    comboBox3.Items.Clear();
+
+                    comboBox3.Items.Add("0-12");
+                    comboBox3.Items.Add("12-20");
+                    comboBox3.Items.Add("20-45");
+                    comboBox3.Items.Add("45-65");
+                    comboBox3.Items.Add("65-150");
+                    comboBox3.Items.Add("Unknown Age");
+                    label4.Text = "Filter on: age";
+                    CreateChart(stringList, "All passengers from the titanic", _sorter.GetSurvivedData(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString()), 2, SeriesChartType.Column);
                     break;
                 
                 case "Class 1":
@@ -219,6 +226,32 @@ namespace Project3_Data
                     }
                     break;
             }
+
+            switch (comboBox3.SelectedItem.ToString())
+            {
+                case "Unknown Age":
+                case "0-12":
+                case "12-20":
+                case "20-45":
+                case "45-65":
+                case "65-150":
+                    var variableList = new List<string>
+                    {
+                        "Survived",
+                        "Dead"
+                    };
+
+                    var data = _sorter.GetSurvivedByAgeCategory(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString());
+                    CreateChart(variableList, "Survied per country, per gender", data, 2, SeriesChartType.Column);
+                    break;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            comboBox1.SelectedIndex = comboBox1.FindStringExact("Passengers");
+            comboBox2.SelectedIndex = comboBox2.FindStringExact("All");
+            comboBox3.SelectedIndex = comboBox3.FindStringExact("All countries");
         }
     }
 }

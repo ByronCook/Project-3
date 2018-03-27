@@ -9,17 +9,33 @@ namespace Project3_Data
 {
     class DataSorter
     {
-//        public List<ChartData> GetSurvivedData(List<Passenger> dataList)
-//        {
-//            var survivedTitanicPassengers = dataList.Count(t => t.Survived);
-//            var deadTitanicPassengers = dataList.Count(t => !t.Survived);
-//
-//            return new List<ChartData>
-//            {
-//                new ChartData {Survived = survivedTitanicPassengers, Dead = deadTitanicPassengers, Female = 10}
-//                // new ChartData(); //2nd boat
-//            };
-//        }
+        public List<ChartData> GetSurvivedData(List<Passenger> titanicPassengersList, List<Passenger> lusitaniaPassengersList, string selectedChoice)
+        {
+            var survivedPassengers = 0;
+            var deadPassengers = 0;
+
+            switch (selectedChoice)
+            {
+                case "All Passengers":
+                case "Survived":
+                    survivedPassengers = titanicPassengersList.Count(t => t.Survived) + lusitaniaPassengersList.Count(t => t.Survived);
+                    deadPassengers = titanicPassengersList.Count(t => !t.Survived) + lusitaniaPassengersList.Count(t => !t.Survived);
+                    break;
+                case "Titanic Passengers":
+                    survivedPassengers = titanicPassengersList.Count(t => t.Survived);
+                    deadPassengers = titanicPassengersList.Count(t => !t.Survived);
+                    break;
+                case "Lusitania Passengers":
+                    survivedPassengers = lusitaniaPassengersList.Count(t => t.Survived);
+                    deadPassengers = lusitaniaPassengersList.Count(t => !t.Survived);
+                    break;
+            }
+
+            return new List<ChartData>
+            {
+                new ChartData {Survived = survivedPassengers, Dead = deadPassengers}
+            };
+        }
 //
 //        public List<ChartData> GetAgeData(List<Passenger> dataList)
 //        {
@@ -62,13 +78,23 @@ namespace Project3_Data
 
         public List<ChartData> GetPassengerByCountryData(List<Passenger> titanicList, List<Passenger> lusitaniaList, string gender, string country)
         {
-            var tPassengers = titanicList.Where(e => e.Gender == gender|| e.Gender == gender);
-            var lPassengers = lusitaniaList.Where(e => e.Gender == gender || e.Gender == gender);
+            var tPassengers = new List<Passenger>();
+            var lPassengers = new List<Passenger>();
 
+            if (gender == "All")
+            { 
+                tPassengers = titanicList;
+                lPassengers = lusitaniaList;
+            }
+            else
+            {
+                tPassengers = titanicList.Where(e => e.Gender == gender || e.Gender == gender).ToList();
+                lPassengers = lusitaniaList.Where(e => e.Gender == gender || e.Gender == gender).ToList();
+            }
 
             var tFromCountry = tPassengers.Count(t => t.Country == country);
             var lFromCountry = lPassengers.Count(t => t.Country == country);
-            Console.WriteLine(lFromCountry + " " + tFromCountry);
+            //Console.WriteLine(lFromCountry + " " + tFromCountry);
             return new List<ChartData>
             {
                 new ChartData
@@ -296,6 +322,71 @@ namespace Project3_Data
                 {
                     TitanicPassengers = malesTitanic,
                     LusitaniaPassengers = malesLusitania
+                }
+            };
+        }
+
+
+        public List<ChartData> GetTitanicSurvivedPassengers(List<Passenger> titanicPassengers)
+        {
+            var surivedPassengers = titanicPassengers.Count(t => t.Survived);
+            var deadPassengers = titanicPassengers.Count(e => !e.Survived);
+
+            return new List<ChartData>()
+            {
+                new ChartData
+                {
+                    Survived = surivedPassengers,
+                    Dead = deadPassengers
+                }
+            };
+        }
+
+        public List<ChartData>GetSurvivedByAgeCategory(List<Passenger> titanicPassengers, List<Passenger> lusitaniaPassengers,
+            string boatChoice, string selectedChoice)
+        {
+            var survived = 0;
+            var dead = 0;
+
+            var age = selectedChoice.Split('-');
+            var age1 = Convert.ToInt32(age[0]);
+            var age2 = Convert.ToInt32(age[1]);
+
+            if (selectedChoice != "Unknown Age")
+            {
+                if (boatChoice == "Titanic Passengers")
+                {
+                    survived = titanicPassengers.Count(t => t.Survived && t.Age > age1 && t.Age < age2);
+                    dead = titanicPassengers.Count(t => !t.Survived && t.Age > age1 && t.Age < age2);
+                }
+                else if (boatChoice == "Lusitania Passengers")
+                {
+                    survived = lusitaniaPassengers.Count(t => t.Survived && t.Age > age1 && t.Age < age2);
+                    dead = lusitaniaPassengers.Count(t => !t.Survived && t.Age > age1 && t.Age < age2);
+                }
+            }
+            else
+            {
+                if (boatChoice == "Titanic Passengers")
+                {
+                    survived = titanicPassengers.Count(t => t.Survived && t.Age == 0);
+                    dead = titanicPassengers.Count(t => !t.Survived && t.Age == 0);
+                }
+                else
+                {
+                    survived = lusitaniaPassengers.Count(t => t.Survived && t.Age == 0);
+                    dead = lusitaniaPassengers.Count(t => !t.Survived && t.Age == 0);
+                }
+            }
+            var e = lusitaniaPassengers.Count(t => t.Age == 0);
+            
+
+            return new List<ChartData>
+            {
+                new ChartData
+                {
+                    Survived = survived,
+                    Dead =  dead
                 }
             };
          }
