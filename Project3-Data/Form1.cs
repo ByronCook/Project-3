@@ -202,13 +202,20 @@ namespace Project3_Data
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var countryList = _sorter.GetUniqueCountries(TitanicPassengers, LusitaniaPassengers);
-            var country = countryList.Contains(comboBox3.SelectedItem.ToString());
-          
+            if(comboBox3.SelectedItem == null)
+            {
+                return;
+            }
             if (string.IsNullOrEmpty(comboBox3.SelectedItem.ToString()))
             {
                 return;
             }
+            var countryList = _sorter.GetUniqueCountries(TitanicPassengers, LusitaniaPassengers);
+
+            var country = countryList.Contains(comboBox3.SelectedItem.ToString());
+            // Waarde bestaat in de lijst -> pak passangers per gender & waarde
+
+            
 
             if (country)
             {
@@ -233,6 +240,11 @@ namespace Project3_Data
                         "FamilyLusitania",
                     };
 
+                        comboBox4.Items.Clear();
+                        comboBox4.Items.Add("Survival Rate");
+                        comboBox4.Items.Add("Amount");
+                        label4.Text = "Filter on: ship";
+
                         CreateChart(variableList, "Family Members", _sorter.GetFamilyMembers(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString()), 2, SeriesChartType.Column);
                     break;
 
@@ -254,18 +266,24 @@ namespace Project3_Data
 
 
                     var data = _sorter.GetSurvivedByAgeCategory(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString());
-                    CreateChart(stringList, "Survied per country, per gender", data, 2, SeriesChartType.Column);
+                    CreateChart(stringList, "Survived per country, per gender", data, 2, SeriesChartType.Column);
+
+                    
                     break;
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            comboBox2.Items.Clear();
+            comboBox3.Items.Clear();
+            comboBox4.Items.Clear();
+
             comboBox1.SelectedIndex = comboBox1.FindStringExact("Passengers");
             comboBox2.SelectedIndex = comboBox2.FindStringExact("All Genders");
             comboBox3.SelectedIndex = comboBox3.FindStringExact("All countries");
 
-            label10.Text = "";
+            label14.Text = "It is quite clear that both the Titanic and the Lusitania both had a lot more male \npassengers than female passengers. With a total of almost 2000 passengers \non the Lusitania, just above 1400 of those were male. The Titanic had \nabout 1400 passengers and a little bit over 800 of those were male. \nWhen comparing the amount of passengers per country, it is evident that most \npassengers came from either the United States, Canada or the United Kingdom. \nBut there are also differences in other countries, for example sweden. \nThe titanic had 40 swedish passengers whereas the Lusitania only had 1";
         }
 
         private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
@@ -286,6 +304,15 @@ namespace Project3_Data
 
                     var data = _sorter.GetSurvivalRate(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString(), comboBox4.SelectedItem.ToString());
                     CreateChart(stringList, "Survival rate", data, 2, SeriesChartType.Column);
+                case "Survival Rate":
+                case "Amount":
+                    var stringList = new List<string>
+                    {
+                        "SurvivedTitanicPassengers",
+                        "SurvivedLusitaniaPassengers"
+                    };
+
+                    CreateChart(stringList, "Survival rate in percentages", _sorter.GetSurvivalRatePerBoatClass(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString(), comboBox4.SelectedItem.ToString()), 2, SeriesChartType.Column);
 
                     break;
                 case "Amount":
@@ -310,12 +337,28 @@ namespace Project3_Data
 
         private void button2_Click(object sender, EventArgs e)
         {
+            comboBox2.Items.Clear();
+            comboBox3.Items.Clear();
+            comboBox4.Items.Clear();
+            comboBox1.SelectedIndex = comboBox1.FindStringExact("Boat Class");
+            comboBox2.SelectedIndex = comboBox2.FindStringExact("Class 1");
+            comboBox3.SelectedIndex = comboBox3.FindStringExact("Has Family Members");
+            comboBox4.SelectedIndex = comboBox4.FindStringExact("Survival Rate");
+
+            label14.Text = "Both cruisers show that there a noteable differences in \nsurvival rate depending on class and family members on board, \nwith RMS Titanic seeing the biggest spike of survival in first class with \npassengers who had family aboard. Other classes don't show as \nmuch of a difference of survival rate whether they had family on \nboard or not. This could be explained by the Titanic being  \na 'A-class' ocean liner and thus being popular with the upper class. \nOverall survival rates are generally higher on RMS Titanic, \nsomething that could be attributed to the lenghty two and half hour \nsinking as opposed to the fairly quick 18 minute sinking \nof RMS Lusitania which would give passengers of the former \nmore time to act. Seeing that RMS Lusitania sunk due to an \nattack as opposed to the supposed accident that sunk RMS \nTitanic could help understand the significant differences \nof survivability between the two liners.";
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            comboBox2.Items.Clear();
+            comboBox3.Items.Clear();
+            comboBox4.Items.Clear();
             comboBox1.SelectedIndex = comboBox1.FindStringExact("Survived");
             comboBox2.SelectedIndex = comboBox2.FindStringExact("Titanic Passengers");
             comboBox3.SelectedIndex = comboBox3.FindStringExact("20-45");
 
-            label10.Text = "";
-
+            label14.Text = "No, there is no significant difference in survival rate \nper age group. Both ships show a trend slightly \nfavoring younger individuals, peaking at the age group \nof 12 – 20 years old. Our hypothesis is that it is \nlinked to general health and fitness of the individuals, \nmainly because these people can rush to safety much faster \nwith less effort than the elderly and also more efficient and \nwith caution than kids below 12.";
         }
     }
 }

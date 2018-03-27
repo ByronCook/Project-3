@@ -117,4 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label6.Text" xml:space="preserve">
+    <value>Is there a relation in the survival rate per class regarding passengers with one or more family member on board of the Titanic and the Lusitania in
+comparison to the passengers that were on said ships without family members on board?</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>RMS Titanic was a British passenger liner that sank in 
+the North Atlantic Ocean in the early hours of 15 April 1912,
+after colliding with an iceberg during its maiden voyage from
+Southampton to New York City. </value>
+  </data>
+  <data name="label13.Text" xml:space="preserve">
+    <value>RMS Lusitania was a British ocean liner that was in operation
+during the early 20th century. The ship was a holder of the 
+Blue Riband, and briefly the world's largest passenger ship 
+until the completion of her sister ship Mauretania.</value>
+  </data>
 </root>

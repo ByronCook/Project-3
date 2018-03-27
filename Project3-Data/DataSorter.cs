@@ -36,6 +36,210 @@ namespace Project3_Data
                 new ChartData {Survived = survivedPassengers, Dead = deadPassengers}
             };
         }
+
+        public List<ChartData> GetSurvivalRatePerBoatClass(List<Passenger> titanicPassengersList, List<Passenger> lusitaniaPassengersList, string selectedClass, string selectedFamily, string selectedBoatRate)
+        {
+            var survivedTitanic = 0;
+            var survivedLusitania = 0;
+            switch (selectedClass)
+            {
+                case "Class 1":
+                    var titanicPassengers = titanicPassengersList.Where(t => t.BoatClass == "First");
+                    var lusitaniaPassengers = lusitaniaPassengersList.Where(l => l.BoatClass == "First");
+
+                    if (selectedFamily == "Has Family Members")
+                    {
+                        titanicPassengers = titanicPassengers.Where(t => t.FamilyMembers > 0);
+                        lusitaniaPassengers = lusitaniaPassengers.Where(t => t.FamilyMembers > 0);
+
+                        if(selectedBoatRate == "Survival Rate")
+                        {
+                            var survivedPssengers = titanicPassengers.Count(t => t.Survived);
+                            survivedTitanic = (survivedPssengers* 100) / titanicPassengers.Count();
+
+                            var survivedLusi = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedLusitania = (survivedLusi * 100) / lusitaniaPassengers.Count();
+
+                        } else {
+                            survivedLusitania = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedTitanic = titanicPassengers.Count(t => t.Survived);
+                        }
+
+                    } else if(selectedFamily == "Has No Family Members")
+                    {
+                        titanicPassengers = titanicPassengers.Where(t => t.FamilyMembers == 0);
+                        lusitaniaPassengers = lusitaniaPassengers.Where(t => t.FamilyMembers == 0);
+
+                        if (selectedBoatRate == "Survival Rate")
+                        {
+                            var survivedPssengers = titanicPassengers.Count(t => t.Survived);
+                            survivedTitanic = (survivedPssengers * 100) / titanicPassengers.Count();
+
+                            var survivedLusi = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedLusitania = (survivedLusi * 100) / lusitaniaPassengers.Count();
+
+                        }
+                        else
+                        {
+                            survivedLusitania = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedTitanic = titanicPassengers.Count(t => t.Survived);
+                        }
+
+
+                    } else
+                    {
+                        if (selectedBoatRate == "Survival Rate")
+                        {
+                            var survivedPssengers = titanicPassengers.Count(t => t.Survived);
+                            survivedTitanic = (survivedPssengers * 100) / titanicPassengers.Count();
+
+                            var survivedLusi = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedLusitania = (survivedLusi * 100) / lusitaniaPassengers.Count();
+
+                        }
+                        else
+                        {
+                            survivedLusitania = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedTitanic = titanicPassengers.Count(t => t.Survived);
+                        }
+                    }
+                    break;
+                case "Class 2":
+                    titanicPassengers = titanicPassengersList.Where(t => t.BoatClass == "Second");
+                    lusitaniaPassengers = lusitaniaPassengersList.Where(l => l.BoatClass == "Second");
+
+                    if (selectedFamily == "Has Family Members")
+                    {
+                        titanicPassengers = titanicPassengers.Where(t => t.FamilyMembers > 0);
+                        lusitaniaPassengers = lusitaniaPassengers.Where(t => t.FamilyMembers > 0);
+
+                        if (selectedBoatRate == "Survival Rate")
+                        {
+                            var survivedPssengers = titanicPassengers.Count(t => t.Survived);
+                            survivedTitanic = (survivedPssengers * 100) / titanicPassengers.Count();
+
+                            var survivedLusi = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedLusitania = (survivedLusi * 100) / lusitaniaPassengers.Count();
+
+                        }
+                        else
+                        {
+                            survivedLusitania = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedTitanic = titanicPassengers.Count(t => t.Survived);
+                        }
+
+                    }
+                    else if (selectedFamily == "Has No Family Members")
+                    {
+                        titanicPassengers = titanicPassengers.Where(t => t.FamilyMembers == 0);
+                        lusitaniaPassengers = lusitaniaPassengers.Where(t => t.FamilyMembers == 0);
+
+                        if (selectedBoatRate == "Survival Rate")
+                        {
+                            var survivedPssengers = titanicPassengers.Count(t => t.Survived);
+                            survivedTitanic = (survivedPssengers * 100) / titanicPassengers.Count();
+
+                            var survivedLusi = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedLusitania = (survivedLusi * 100) / lusitaniaPassengers.Count();
+
+                        }
+                        else
+                        {
+                            survivedLusitania = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedTitanic = titanicPassengers.Count(t => t.Survived);
+                        }
+
+
+                    }
+                    else
+                    {
+                        if (selectedBoatRate == "Survival Rate")
+                        {
+                            var survivedPssengers = titanicPassengers.Count(t => t.Survived);
+                            survivedTitanic = (survivedPssengers * 100) / titanicPassengers.Count();
+
+                            var survivedLusi = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedLusitania = (survivedLusi * 100) / lusitaniaPassengers.Count();
+
+                        }
+                        else
+                        {
+                            survivedLusitania = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedTitanic = titanicPassengers.Count(t => t.Survived);
+                        }
+                    }
+                    break;
+                case "Class 3":
+                    titanicPassengers = titanicPassengersList.Where(t => t.BoatClass == "Third");
+                    lusitaniaPassengers = lusitaniaPassengersList.Where(l => l.BoatClass == "Third");
+
+                    if (selectedFamily == "Has Family Members")
+                    {
+                        titanicPassengers = titanicPassengers.Where(t => t.FamilyMembers > 0);
+                        lusitaniaPassengers = lusitaniaPassengers.Where(t => t.FamilyMembers > 0);
+
+                        if (selectedBoatRate == "Survival Rate")
+                        {
+                            var survivedPssengers = titanicPassengers.Count(t => t.Survived);
+                            survivedTitanic = (survivedPssengers * 100) / titanicPassengers.Count();
+
+                            var survivedLusi = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedLusitania = (survivedLusi * 100) / lusitaniaPassengers.Count();
+
+                        }
+                        else
+                        {
+                            survivedLusitania = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedTitanic = titanicPassengers.Count(t => t.Survived);
+                        }
+
+                    }
+                    else if (selectedFamily == "Has No Family Members")
+                    {
+                        titanicPassengers = titanicPassengers.Where(t => t.FamilyMembers == 0);
+                        lusitaniaPassengers = lusitaniaPassengers.Where(t => t.FamilyMembers == 0);
+
+                        if (selectedBoatRate == "Survival Rate")
+                        {
+                            var survivedPssengers = titanicPassengers.Count(t => t.Survived);
+                            survivedTitanic = (survivedPssengers * 100) / titanicPassengers.Count();
+
+                            var survivedLusi = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedLusitania = (survivedLusi * 100) / lusitaniaPassengers.Count();
+
+                        }
+                        else
+                        {
+                            survivedLusitania = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedTitanic = titanicPassengers.Count(t => t.Survived);
+                        }
+
+
+                    }
+                    else
+                    {
+                        if (selectedBoatRate == "Survival Rate")
+                        {
+                            var survivedPssengers = titanicPassengers.Count(t => t.Survived);
+                            survivedTitanic = (survivedPssengers * 100) / titanicPassengers.Count();
+
+                            var survivedLusi = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedLusitania = (survivedLusi * 100) / lusitaniaPassengers.Count();
+
+                        }
+                        else
+                        {
+                            survivedLusitania = lusitaniaPassengers.Count(t => t.Survived);
+                            survivedTitanic = titanicPassengers.Count(t => t.Survived);
+                        }
+                    }
+                    break;
+            }
+            return new List<ChartData>
+            {
+                new ChartData {SurvivedTitanicPassengers = survivedTitanic, SurvivedLusitaniaPassengers = survivedLusitania}
+            };
+        }
 //
 //        public List<ChartData> GetAgeData(List<Passenger> dataList)
 //        {
@@ -50,31 +254,31 @@ namespace Project3_Data
 //            };
 //        }
 
-//        public List<ChartData> GetSurvivalRate(List<Passenger> dataList)
-//        {
-//            var males = dataList.Where(e => e.Gender == "Male" || e.Gender == "male");
-//            var females = dataList.Where(e => e.Gender == "Female" || e.Gender == "female");
-//            var maleKids = males.Where(e => e.Age < 18);
-//
-//            var survivedMales = males.Where(e => e.Survived);
-//            var survivedFemales = females.Where(e => e.Survived);
-//
-//            var survivedMaleAdults = males.Where(e => e.Age >= 18 && e.Survived);
-//            var survivedMalesKids = maleKids.Where(e => e.Survived);
-//
-//            var adultMaleSurvivalRate = (survivedMaleAdults.Count()*100)/males.Count();
-//            var femalesAndKidsSurvivalRate = ((survivedFemales.Count() + survivedMalesKids.Count())*100/
-//                                              (females.Count() + maleKids.Count()));
-//
-//            return new List<ChartData>
-//            {
-//                new ChartData
-//                {
-//                    MaleSurivalRate = adultMaleSurvivalRate,
-//                    FemalesAndKidsSurvivalRate = femalesAndKidsSurvivalRate
-//                }
-//            };
-//        }
+        //        public List<ChartData> GetSurvivalRate(List<Passenger> dataList)
+        //        {
+        //            var males = dataList.Where(e => e.Gender == "Male" || e.Gender == "male");
+        //            var females = dataList.Where(e => e.Gender == "Female" || e.Gender == "female");
+        //            var maleKids = males.Where(e => e.Age < 18);
+        //
+        //            var survivedMales = males.Where(e => e.Survived);
+        //            var survivedFemales = females.Where(e => e.Survived);
+        //
+        //            var survivedMaleAdults = males.Where(e => e.Age >= 18 && e.Survived);
+        //            var survivedMalesKids = maleKids.Where(e => e.Survived);
+        //
+        //            var adultMaleSurvivalRate = (survivedMaleAdults.Count()*100)/males.Count();
+        //            var femalesAndKidsSurvivalRate = ((survivedFemales.Count() + survivedMalesKids.Count())*100/
+        //                                              (females.Count() + maleKids.Count()));
+        //
+        //            return new List<ChartData>
+        //            {
+        //                new ChartData
+        //                {
+        //                    MaleSurivalRate = adultMaleSurvivalRate,
+        //                    FemalesAndKidsSurvivalRate = femalesAndKidsSurvivalRate
+        //                }
+        //            };
+        //        }
 
         public List<ChartData> GetPassengerByCountryData(List<Passenger> titanicList, List<Passenger> lusitaniaList, string gender, string country)
         {
@@ -214,6 +418,7 @@ namespace Project3_Data
             };
 
         }
+
         //public List<ChartData> GetNoFamilyMembers(List<Passenger> titanicList, List<Passenger> lusitaniaList)
         //{
 

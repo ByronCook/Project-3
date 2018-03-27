@@ -26,5 +26,7 @@
         public int FamilyLusitania { get; set; } = 0;
         public int YesFamilyLusitania { get; set; } = 0;
         public int NoFamilyLusitania { get; set; } = 0;
+        public int SurvivedTitanicPassengers { get; set; } = 0;
+        public int SurvivedLusitaniaPassengers { get; set; } = 0;
     }
 }
