@@ -23,6 +23,9 @@ namespace Project3_Data
                     continue;
                 }
                 var values = item.Split(','); // leeftijd, overleeft, classe, geslacht, country, 
+
+                var siblings = values[7] != "" ? Convert.ToInt32(values[7]) : 0;
+                var parents = values[8] != "" ? Convert.ToInt32(values[8]) : 0;
                 passengerList.Add(new Passenger
                 {
                     BoatClass = values[0],
@@ -31,7 +34,8 @@ namespace Project3_Data
                     LastName = values[4],
                     Gender = values[5],
                     Age = values[6] != "" ? Convert.ToDouble(values[6]) : 0,
-                    Country = values[14]
+                    Country = values[14],
+                    FamilyMembers = siblings + parents
                 });
             }
 
@@ -54,6 +58,9 @@ namespace Project3_Data
                     continue;
                 }
                 var values = item.Split(','); // leeftijd, overleeft, classe, geslacht, country, 
+                var siblings = values[7] != "" ? Convert.ToInt32(values[7]) : 0;
+                var parents = values[8] != "" ? Convert.ToInt32(values[8]) : 0;
+
                 passengerList.Add(new Passenger
                 {
                     BoatClass = values[0],
@@ -62,7 +69,8 @@ namespace Project3_Data
                     LastName = values[4],
                     Gender = values[5],
                     Age = values[6] != "" ? Convert.ToDouble(values[6]) : 0,
-                    Country = values[13]
+                    Country = values[13],
+                    FamilyMembers = siblings + parents
                 });
             }
 

@@ -80,38 +80,142 @@ namespace Project3_Data
         } 
 
         // vraag Jorren en Joyce
-        public List<ChartData> GetBoatClass(List<Passenger> titanicList, List<Passenger> lusitaniaList)
+        public List<ChartData> GetPassengersByBoatClass(List<Passenger> titanicList, List<Passenger> lusitaniaList, string selectedChoice)
         {
-            var firstClassTitanic = titanicList.Count(t => t.BoatClass == "First");
-            var secondClassTitanic = titanicList.Count(t => t.BoatClass == "Second");
-            var thirdClassTitanic = titanicList.Count(t => t.BoatClass == "Third");
+            var titanicPassengers = 0;
+            var lusitaniaPassengers = 0;
+            switch(selectedChoice)
+            {
+                case "Class 1":
+                    titanicPassengers = titanicList.Count(t => t.BoatClass == "First");
+                    lusitaniaPassengers = lusitaniaList.Count(l => l.BoatClass == "First");
+                    break;
+                case "Class 2":
+                    titanicPassengers = titanicList.Count(t => t.BoatClass == "Second");
+                    lusitaniaPassengers = lusitaniaList.Count(l => l.BoatClass == "Second");
+                    break;
+                case "Class 3":
+                    titanicPassengers = titanicList.Count(t => t.BoatClass == "Third");
+                    lusitaniaPassengers = lusitaniaList.Count(l => l.BoatClass == "Third");
+                    break;
 
-            var firstClassLusitania = lusitaniaList.Count(l => l.BoatClass == "First");
-            var secondClassLusitania = lusitaniaList.Count(l => l.BoatClass == "Second");
-            var thirdClassLusitania = lusitaniaList.Count(l => l.BoatClass == "Third");
+            }
+            //var survivedTitanic = titanicList.Where(t => t.Survived);
+            //var survivedLusitania = lusitaniaList.Where(l => l.Survived);
 
-            var survivedTitanic = titanicList.Where(t => t.Survived);
-            var survivedLusitania = lusitaniaList.Where(l => l.Survived);
 
-            Console.WriteLine(firstClassLusitania);
+            //    Console.WriteLine(firstClassLusitania);
 
             return new List<ChartData>
             {
                 new ChartData
                 {
-                    FirstClassTitanic = firstClassTitanic,
-                    SecondClassTitanic = secondClassTitanic,
-                    ThirdClassTitanic = thirdClassTitanic,
+                    TitanicPassengers = titanicPassengers,
+                    LusitaniaPassengers = lusitaniaPassengers
+                }
+            };
+        
+        }
 
-                    FirstClassLusitania = firstClassLusitania,
-                    SecondClassLusitania = secondClassLusitania,
-                    ThirdClassLusitania = thirdClassLusitania
+        public List<ChartData> GetBoatClass(List<Passenger> titanicList, List<Passenger> lusitaniaList)
+        {
+            return new List<ChartData>
+            {
+                new ChartData
+                {
+                    FirstClassTitanic = titanicList.Count(t => t.BoatClass == "First"),
+                    FirstClassLusitania = lusitaniaList.Count(l => l.BoatClass == "First"),
+
+                    SecondClassTitanic = titanicList.Count(t => t.BoatClass == "Second"),
+                    ThirdClassTitanic = titanicList.Count(t => t.BoatClass == "Third"),
+
+                    SecondClassLusitania = lusitaniaList.Count(l => l.BoatClass == "Second"),
+                    ThirdClassLusitania = lusitaniaList.Count(l => l.BoatClass == "Third")
                 }
             };
         }
 
+        public List<ChartData> GetFamilyMembers(List<Passenger> titanicList, List<Passenger> lusitaniaList, string selectedClass, string selectedChoice)
+        {
+            switch (selectedClass)
+            {
+                case "Class 1":
+                    selectedClass = "First";
+                    break;
+                case "Class 2":
+                    selectedClass = "Second";
+                    break;
+                case "Class 3":
+                    selectedClass = "Third";
+                    break;
+            }
+            var familyTitanic = 0;
+            var familyLusitania = 0;
 
-         public void PopulateDatabase()
+            if (selectedChoice == "Has Family Members")
+            {
+                familyTitanic = titanicList.Count(t => t.FamilyMembers > 0 && t.BoatClass == selectedClass);
+                familyLusitania = lusitaniaList.Count(t => t.FamilyMembers > 0 && t.BoatClass == selectedClass);
+            } else if (selectedChoice == "Has No Family Members")
+            {
+                familyTitanic = titanicList.Count(t => t.FamilyMembers == 0 && t.BoatClass == selectedClass);
+                familyLusitania = lusitaniaList.Count(t => t.FamilyMembers == 0 && t.BoatClass == selectedClass);
+            } else
+            {
+                familyTitanic = titanicList.Count(t => t.BoatClass == selectedClass);
+                familyLusitania = lusitaniaList.Count(t => t.BoatClass == selectedClass);
+            }
+
+
+            //var yesFamilyTitanic = titanicList.Count(t => t.FamilyMembers > 0);
+            ////var noFamilyTitanic = titanicList.Count(t => t.FamilyMembers == 0);
+
+            //var yesFamilyLusitania = lusitaniaList.Count(l => l.FamilyMembers > 0);
+            ////var noFamilyLusitania = lusitaniaList.Count(l => l.FamilyMembers == 0);
+            
+            //Console.WriteLine(yesFamilyLusitania);
+
+            return new List<ChartData>
+            {
+                new ChartData
+                {
+                    FamilyTitanic = familyTitanic,
+                    //NoFamilyTitanic = noFamilyTitanic,
+
+                    FamilyLusitania = familyLusitania,
+                    //NoFamilyLusitania = noFamilyLusitania,
+                }
+            };
+
+        }
+        //public List<ChartData> GetNoFamilyMembers(List<Passenger> titanicList, List<Passenger> lusitaniaList)
+        //{
+
+        //    var yesFamilyTitanic = titanicList.Count(t => t.FamilyMembers > 0);
+        //    var noFamilyTitanic = titanicList.Count(t => t.FamilyMembers == 0);
+
+        //    var yesFamilyLusitania = lusitaniaList.Count(l => l.FamilyMembers > 0);
+        //    var noFamilyLusitania = lusitaniaList.Count(l => l.FamilyMembers == 0);
+
+        //    Console.WriteLine(yesFamilyLusitania);
+
+        //    return new List<ChartData>
+        //    {
+        //        new ChartData
+        //        {
+        //            YesFamilyTitanic = yesFamilyTitanic,
+        //            NoFamilyTitanic = noFamilyTitanic,
+
+        //            YesFamilyLusitania = yesFamilyLusitania,
+        //            NoFamilyLusitania = noFamilyLusitania,
+        //        }
+        //    };
+
+        //}
+
+
+
+        public void PopulateDatabase()
          {
             SqlConnection sqlConn =
                 new SqlConnection(

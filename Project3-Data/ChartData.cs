@@ -19,9 +19,12 @@
         public int FirstClassTitanic { get; set; } = 0;
         public int SecondClassTitanic { get; set; } = 0;
         public int ThirdClassTitanic { get; set; } = 0;
-
         public int FirstClassLusitania { get; set; } = 0;
         public int SecondClassLusitania { get; set; } = 0;
         public int ThirdClassLusitania { get; set; } = 0;
+        public int FamilyTitanic { get; set; } = 0;
+        public int FamilyLusitania { get; set; } = 0;
+        public int YesFamilyLusitania { get; set; } = 0;
+        public int NoFamilyLusitania { get; set; } = 0;
     }
 }

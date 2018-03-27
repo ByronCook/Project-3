@@ -15,5 +15,7 @@ namespace Project3_Data
         public string Gender { get; set; }
         public double? Age { get; set; }
         public string Country { get; set; }
+        public int FamilyMembers { get; set; } 
+
     }
 }
