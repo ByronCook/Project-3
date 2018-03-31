@@ -14,7 +14,8 @@ namespace Project3_Data
         public Form1()
         {
             InitializeComponent();
-            //_sorter.PopulateDatabase();
+            //_sorter.PopulateTitanicDatabase();
+            //_sorter.PopulateLusitaniaDatabase();
         }
 
         private void LoadData()
@@ -62,6 +63,10 @@ namespace Project3_Data
             {
                 return;
             }
+
+            comboBox2.ResetText();
+            comboBox3.ResetText();
+            comboBox4.ResetText();
 
             switch (comboBox1.SelectedItem.ToString())
             {
@@ -126,6 +131,9 @@ namespace Project3_Data
                         "LusitaniaPassengers"
                     };
 
+            comboBox3.ResetText();
+            comboBox4.ResetText();
+
             if (string.IsNullOrEmpty(comboBox2.SelectedItem.ToString()))
             {
                 return;
@@ -176,7 +184,7 @@ namespace Project3_Data
                     comboBox3.Items.Add("65-150");
                     comboBox3.Items.Add("Unknown Age");
                     label4.Text = "Filter on: age";
-                    CreateChart(stringList, "All passengers from the titanic", _sorter.GetSurvivedData(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString()), 2, SeriesChartType.Column);
+                    CreateChart(stringList, "All passengers from...", _sorter.GetSurvivedData(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString()), 2, SeriesChartType.Column);
                     break;
                 
                 case "Class 1":
@@ -210,6 +218,9 @@ namespace Project3_Data
             {
                 return;
             }
+
+            comboBox4.ResetText();
+
             var countryList = _sorter.GetUniqueCountries(TitanicPassengers, LusitaniaPassengers);
 
             var country = countryList.Contains(comboBox3.SelectedItem.ToString());
@@ -245,7 +256,7 @@ namespace Project3_Data
                         comboBox4.Items.Add("Amount of Passengers");
                         label4.Text = "Filter on: ship";
 
-                        CreateChart(variableList, "Family Members", _sorter.GetFamilyMembers(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString()), 2, SeriesChartType.Column);
+                        CreateChart(variableList, "Amount of passengers that have...", _sorter.GetFamilyMembers(TitanicPassengers, LusitaniaPassengers, comboBox2.SelectedItem.ToString(), comboBox3.SelectedItem.ToString()), 2, SeriesChartType.Column);
                     break;
 
                 case "Unknown Age":

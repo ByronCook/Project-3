@@ -446,7 +446,7 @@ namespace Project3_Data
 
 
 
-        public void PopulateDatabase()
+        public void PopulateTitanicDatabase()
          {
             SqlConnection sqlConn =
                 new SqlConnection(
@@ -485,6 +485,53 @@ namespace Project3_Data
                 da.InsertCommand.Parameters.Add("@gender", SqlDbType.VarChar).Value = values[3];
                 da.InsertCommand.Parameters.Add("@age", SqlDbType.VarChar).Value = values[4];
                 da.InsertCommand.Parameters.Add("@country", SqlDbType.VarChar).Value = values[5];
+                sqlConn.Open();
+                da.InsertCommand.ExecuteNonQuery();
+
+                da.SelectCommand = new SqlCommand("SELECT * FROM TitanicPassengers");
+                sqlConn.Close();
+            }
+        }
+
+        public void PopulateLusitaniaDatabase()
+        {
+            SqlConnection sqlConn =
+                new SqlConnection(
+                    @"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True");
+
+            SqlDataAdapter da = new SqlDataAdapter();
+
+
+
+            var projectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent?.FullName;
+            var filePath = projectPath + "\\resource\\Lusitania_Sorted_v1.csv";
+
+            var passengerLines = File.ReadAllLines(filePath);
+
+            foreach (var item in passengerLines)
+            {
+                if (passengerLines.ElementAt(0) == item)
+                {
+                    continue;
+                }
+
+                if (passengerLines.ElementAt(1962) == item)
+                {
+                    return;
+                }
+
+                var values = item.Split(',');
+
+                da.InsertCommand =
+                    new SqlCommand(
+                        "INSERT INTO LusitaniaPassengers VALUES(@boatclass,@survived,@name,@gender,@age,@country)",
+                        sqlConn);
+                da.InsertCommand.Parameters.Add("@boatclass", SqlDbType.VarChar).Value = values[0];
+                da.InsertCommand.Parameters.Add("@survived", SqlDbType.Int).Value = values[1];
+                da.InsertCommand.Parameters.Add("@name", SqlDbType.VarChar).Value = values[3];
+                da.InsertCommand.Parameters.Add("@gender", SqlDbType.VarChar).Value = values[5];
+                da.InsertCommand.Parameters.Add("@age", SqlDbType.VarChar).Value = values[6];
+                da.InsertCommand.Parameters.Add("@country", SqlDbType.VarChar).Value = values[13];
                 sqlConn.Open();
                 da.InsertCommand.ExecuteNonQuery();
 
